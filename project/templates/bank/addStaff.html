@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../static/bankResources/images/favicon.png">
+    <title>AdminBite admin Template - The Ultimate Multipurpose admin template</title>
+    <!-- Custom CSS -->
+    <link href="../../static/bankResources/css/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="../../static/bankResources/js/html5shiv.js"></script>
+    <script src="../../static/bankResources/js/respond.min.js"></script>
+<![endif]-->
+    <script>
+
+                function ajaxLoadArea()
+                {
+
+                    var cityId=document.getElementById('cityId');
+
+                    var areaId=document.getElementById('areaId');
+
+                    {#areaId.innerHTML="";#}
+
+                    var ajax=new XMLHttpRequest();
+
+                    ajax.onreadystatechange=function () {
+
+
+                        if(ajax.readyState==4){
+
+                           var jsn=JSON.parse(ajax.responseText);
+
+                           for(var i=0;i<jsn.length;i++)
+                           {
+
+                                var option = document.createElement("option");
+                                option.value = jsn[i].areaId;
+                                option.text = jsn[i].areaName;
+                                areaId.options.add(option);
+                           }
+                        }
+                    }
+                    ajax.open("get","/ajaxLoadArea?cityId="+cityId.value,true);
+                    ajax.send();
+                }
+        </script>
+
+        <script>
+               function checkEmail()
+                {
+                        {#alert('in checkemail')#}
+                        var loginEmail = document.getElementById('staffEmail');
+                        var email_status = document.getElementById('email_status');
+                        {#alert('var created')#}
+
+
+                        var ajax = new XMLHttpRequest();
+
+                        {#alert('req generated')#}
+                        ajax.onreadystatechange = function () {
+                            if(ajax.readyState==4) {
+                                {#alert('onkeyup fun')#}
+                                var jsn = JSON.parse(ajax.responseText);
+
+                                email_status.innerHTML = jsn.EXISTANCE;
+                                {#email_status.appendChild(jsn.EXISTANCE);#}
+                                {#email_status.html = jsn.EXISTANCE;#}
+                                {#email_status.text = jsn.EXISTANCE;#}
+                            }
+                        }
+                        {#alert('above url')#}
+                        ajax.open("GET","/restrictDuplicateEmail?loginEmail="+loginEmail.value,true);
+                        ajax.send();
+                }
+           </script>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        {% include "bank/header.html" %}
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {% include "bank/menu.html" %}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-5 align-self-center">
+                        <h4 class="page-title">Manage Staff</h4>
+                        <div class="d-flex align-items-center">
+
+                        </div>
+                    </div>
+
+
+                    <!-- CHANGE THIS CODE HOME/LIBRARY......-->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <div class="col-7 align-self-center">
+                        <div class="d-flex no-block justify-content-end align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="/indexpage">Home</a>
+                                    </li>
+{#                                    <li class="breadcrumb-item active" aria-current="page">Library</li>#}
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Add Staff</h4>
+                            <form action="/insertStaff" method="post" class="m-t-40" novalidate>
+
+{#                                <input type="hidden" name="branch_BankId" value="{{ key['branch_BankId'] }}">#}
+
+                                <div class="form-group">
+
+                                            {% with messages = get_flashed_messages() %}
+                                                 {% if messages %}
+{#                                                    <ul>#}
+                                                       {% for message in messages %}
+        {#                                                    <li>{{ message }}</li>#}
+                                                              <li style="color: red">{{ message }}</li>
+                                                       {% endfor %}
+{#                                                    </ul>#}
+                                                 {% endif %}
+                                            {% endwith %}
+
+                                </div>
+
+                                <!-- First Name -->
+                                <div class="form-group">
+                                    <h5>First Name <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <input type="text" name="staffFirstName" class="form-control" required data-validation-required-message="This field is required"> </div>
+                                    <!--<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div> -->
+                                </div>
+
+                                <!-- Last Name -->
+                                <div class="form-group">
+                                    <h5>Last Name <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <input type="text" name="staffLastName" class="form-control" required data-validation-required-message="This field is required"> </div>
+                                    <!--<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div> -->
+                                </div>
+
+                                <!-- Gender  -->
+                                <div class="col-md-6">
+                                        <div class="form-group">
+                                            <h5>Gender <span class="text-danger">*</span></h5>
+                                            <fieldset class="controls">
+                                                <div class="custom-control custom-radio">
+                                                    <!--styled_radio -->
+                                                    <input type="radio" value="male" name="staffGender" required id="styled_radio1" class="custom-control-input">
+                                                    <label class="custom-control-label" for="styled_radio1">Male</label>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" value="female" name="staffGender" id="styled_radio2" class="custom-control-input">
+                                                    <label class="custom-control-label" for="styled_radio2">Female</label>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                </div>
+
+                                <!-- Date of Birth -->
+                                <div class="form-group">
+                                    <h5>Date of Birth <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+{#                                        ^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$ #}
+                                        <input type="text" name="staffDateOfBirth" class="form-control" placeholder="YYYY-MM-DD" data-validation-regex-regex="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" data-validation-regex-message="Enter Valid Date"> </div>
+                                </div>
+
+                                <!-- Home Address -->
+                                <div class="form-group">
+                                        <h5>Employee Address<span class="text-danger">*</span></h5>
+                                        <div class="controls">
+                                            <textarea name="staffAddress" id="textarea" class="form-control" required placeholder="Address Here"></textarea>
+                                        </div>
+                                </div>
+
+                                <!-- Edit City Dropdown -->
+                                <div class="form-group">
+                                    <h5>Select City<span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <select name="staff_CityId" id="cityId" onchange="ajaxLoadArea()" required class="form-control">
+                                              <option value="" selected disabled>Select City</option>
+                                              {% for i in cityDict %}
+                                                        <option value="{{ i['cityId'] }}" > {{ i['cityName'] }}</option>
+                                              {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!--Area Dropdown -->
+                                <div class="form-group">
+                                    <h5>Select Area<span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <select name="staff_AreaId" id="areaId" required class="form-control">
+                                            <option value="" selected disabled>Select Area</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!--Branch Dropdown -->
+                                <div class="form-group">
+                                    <h5>Select Branch<span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <select name="staff_BranchId" id="select" required class="form-control">
+                                              <option value="" selected disabled>Select Branch</option>
+                                              {% for j in branchDict %}
+                                                        <option value="{{ j['branchId'] }}" > {{ j['branchName'] }}</option>
+                                              {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <!-- Staff Role -->
+                                <div class="col-md-6">
+                                        <div class="form-group">
+                                            <h5> Staff Role <span class="text-danger">*</span></h5>
+                                            <fieldset class="controls">
+                                                <div class="custom-control custom-radio">
+                                                    <!--styled_radio -->
+                                                    <input type="radio" value="cashier" name="staffRole" required id="styled_radio3" class="custom-control-input">
+                                                    <label class="custom-control-label" for="styled_radio3">Cashier</label>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" value="manager" name="staffRole" id="styled_radio4" class="custom-control-input">
+                                                    <label class="custom-control-label" for="styled_radio4">Manager</label>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" value="other" name="staffRole" id="styled_radio5" class="custom-control-input">
+                                                    <label class="custom-control-label" for="styled_radio5">Other</label>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                </div>
+{#                                <div class="form-group">#}
+{#                                    <h5>Staff Role <span class="text-danger">*</span></h5>#}
+{#                                    <div class="controls">#}
+{#                                        <input type="text" name="staffRole" class="form-control" required data-validation-required-message="This field is required"> </div>#}
+{#                                    <!--<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div> -->#}
+{#                                </div>#}
+
+{#                                <!--StaffRole Dropdown -->#}
+{#                                <div class="form-group">#}
+{#                                    <h5>Select Area<span class="text-danger">*</span></h5>#}
+{#                                    <div class="controls">#}
+{#                                        <select name="areaId" id="select" required class="form-control">#}
+{##}
+{#                                              {% for j in areaDict %}#}
+{#                                                        <option value="{{ j['areaId'] }}" > {{ j['areaName'] }}</option>#}
+{#                                                  #Value won't printed#}
+{#                                              {% endfor %}#}
+{##}
+{#                                        </select>#}
+{#                                    </div>#}
+{#                                </div>#}
+
+                                <!-- Staff Phone Number -->
+                                <div class="form-group">
+                                    <h5>Contact Number <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <input type="text" name="staffContact" class="form-control" required data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers"> </div>
+                                </div>
+
+                                <!-- Staff Email -->
+                                <div class="form-group">
+                                    <h5>Email <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <input type="text" name="staffEmail" id="staffEmail" onkeyup="checkEmail()" class="form-control" placeholder="Email Address" data-validation-regex-regex="([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})" data-validation-regex-message="Enter Valid Email">
+                                        <span id="email_status" style="color:rgb(255,0,0); text-align: left; display:block; margin:0 auto ;"></span>
+                                    </div>
+                                </div>
+
+
+                                <!-- Add/Cancel Buttton -->
+                                <div class="text-xs-right">
+                                    <button type="submit" class="btn btn-info">Add</button>
+{#                                    <button type="reset" class="btn btn-inverse">Cancel</button>#}
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            {% include "bank/footer.html" %}
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- customizer Panel -->
+    <!-- ============================================================== -->
+
+    <!-- <div class="chat-windows"></div> -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="../../static/bankResources/js/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="../../static/bankResources/js/popper.min.js"></script>
+    <script src="../../static/bankResources/js/bootstrap.min.js"></script>
+    <!-- apps -->
+    <script src="../../static/bankResources/js/app.min.js"></script>
+    <script src="../../static/bankResources/js/app.init.light-sidebar.js"></script>
+    <script src="../../static/bankResources/js/app-style-switcher.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="../../static/bankResources/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../../static/bankResources/js/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="../../static/bankResources/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="../../static/bankResources/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="../../static/bankResources/js/custom.min.js"></script>
+    <script src="../../static/bankResources/js/validation.js"></script>
+    <script>
+    ! function(window, document, $) {
+        "use strict";
+        $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+    }(window, document, jQuery);
+    </script>
+</body>
+
+</html>

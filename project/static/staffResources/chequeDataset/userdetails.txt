@@ -1,0 +1,1 @@
+{"crop_name": "SA-IL SANG fWI A/C No. 14970100020409\n", "crop_ammout_in_words": "TEN THOUSAND ONLY\n", "crop_ammout_in_digit": null, "crop_date": "0402 2 01\n", "crop_account_number": "30091456699\n", "crop_IFS_code": "SBIN0001815\n", "crop_cheque_number": null}

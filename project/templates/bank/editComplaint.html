@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../static/bankResources/images/favicon.png">
+    <title>AdminBite admin Template - The Ultimate Multipurpose admin template</title>
+    <!-- Custom CSS -->
+    <link href="../../static/bankResources/css/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="../../static/bankResources/js/html5shiv.js"></script>
+    <script src="../../static/bankResources/js/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        {% include "bank/header.html" %}
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {% include "bank/menu.html" %}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-5 align-self-center">
+                        <h4 class="page-title">Manage Complaint</h4>
+                        <div class="d-flex align-items-center">
+
+                        </div>
+                    </div>
+
+
+                    <!-- CHANGE THIS CODE HOME/LIBRARY......-->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <div class="col-7 align-self-center">
+                        <div class="d-flex no-block justify-content-end align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="/indexpage">Home</a>
+                                    </li>
+{#                                    <li class="breadcrumb-item active" aria-current="page">Library</li>#}
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Edit Complaint</h4>
+                            <form action="/updateComplaint" method="post" class="m-t-40" novalidate>
+
+                                {% for key in complaintDict %}
+
+                                 <input type="hidden" name="complaintId" value="{{ key['complaintId'] }}">
+{#                                <input type="hidden" name="{{ key['cityId'] }}" value="{{ key['cityId'] }}">#}
+                                <!-- Edit Complaint Subject -->
+                                <div class="form-group">
+                                    <h5> Complaint Subject <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <input type="text" name="complaintSubject" class="form-control" value="{{ key['complaintSubject'] }}" required data-validation-required-message="This field is required"> </div>
+                                    <!--<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div> -->
+                                </div>
+
+                                <!-- Edit Complaint Description -->
+                                <div class="form-group">
+                                    <h5>Complaint Description<span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <input type="text" name="complaintDescription" class="form-control" value="{{ key['complaintDescription'] }}" required data-validation-required-message="This field is required"> </div>
+                                    <!--<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div> -->
+                                </div>
+
+
+
+                                <!-- Done Button-->
+                                <div class="text-xs-right">
+                                    <button type="submit" class="btn btn-info">Update Complaint</button>
+                                    <!--<button type="reset" class="btn btn-inverse">Cancel</button>-->
+                                </div>
+
+                                {% endfor %}
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            {% include "bank/footer.html" %}
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- customizer Panel -->
+    <!-- ============================================================== -->
+
+    <!-- <div class="chat-windows"></div> -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="../../static/bankResources/js/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="../../static/bankResources/js/popper.min.js"></script>
+    <script src="../../static/bankResources/js/bootstrap.min.js"></script>
+    <!-- apps -->
+    <script src="../../static/bankResources/js/app.min.js"></script>
+    <script src="../../static/bankResources/js/app.init.light-sidebar.js"></script>
+    <script src="../../static/bankResources/js/app-style-switcher.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="../../static/bankResources/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../../static/bankResources/js/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="../../static/bankResources/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="../../static/bankResources/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="../../static/bankResources/js/custom.min.js"></script>
+    <script src="../../static/bankResources/js/validation.js"></script>
+    <script>
+    ! function(window, document, $) {
+        "use strict";
+        $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+    }(window, document, jQuery);
+    </script>
+</body>
+
+</html>

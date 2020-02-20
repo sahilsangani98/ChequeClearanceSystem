@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../static/staffResources/images/favicon.png">
+    <title>AdminBite admin Template - The Ultimate Multipurpose admin template</title>
+    <!-- Custom CSS -->
+    <link href="../../static/staffResources/css/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="../../static/staffResources/js/html5shiv.js"></script>
+    <script src="../../static/staffResources/js/respond.min.js"></script>
+
+
+
+{#    <style>#}
+{#        article, aside, figure, footer, header, hgroup,#}
+{#        menu, nav, section { display: block; }#}
+{#    </style>#}
+
+
+<![endif]-->
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        {% include "staff/header.html" %}
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {% include "staff/menu.html" %}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-5 align-self-center">
+                        <h4 class="page-title">Manage Cheques</h4>
+                        <div class="d-flex align-items-center">
+
+                        </div>
+                    </div>
+
+
+                    <!-- CHANGE THIS CODE HOME/LIBRARY......-->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <div class="col-7 align-self-center">
+                        <div class="d-flex no-block justify-content-end align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="/indexpage">Home</a>
+                                    </li>
+{#                                    <li class="breadcrumb-item active" aria-current="page">Library</li>#}
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Upload Cheque Details</h4>
+                            <form action="/uploadChequeDetails" method="post" class="m-t-40" ">
+
+                                <!--Bank Dropdown -->
+                                <div class="form-group">
+                                    <h5>Select Cheque Issuer Bank<span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <select name="cheque_FromBankId" id="bankId" required class="form-control">
+
+                                              {% for j in bankDict %}
+                                                        <option value="{{ j['bankId'] }}" > {{ j['bankName'] }}</option>
+                                              {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Select Cheque -->
+                                <div class="form-group">
+                                    <h5> Select Cheque <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <input type="file" onchange="readURL(this);" id="chequeName"  name="file" class="form-control" required>
+{#                                        <img id="chequeImage" src="#" alt="Your Cheque Here" />#}
+                                    </div>
+
+                                </div>
+
+                                <!-- Cheque Image-->
+                                <div class="form-group">
+
+                                    <div>
+                                        <img id="chequeImage" src="#" alt="Your Cheque Here" />
+                                    </div>
+
+                                </div>
+
+                                <!-- Cheque Review Button-->
+                                <div class="form-group">
+
+                                    <div>
+                                        <button type="button" class="btn btn-info" onclick="ajaxCheque()">Review Cheque Details</button>
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Cheque Number -->
+                                <div class="form-group">
+                                    <h5> Cheque Number <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <input type="text" name="chequeNumber" id="chequeNumber"  class="form-control" required data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers"> </div>
+                                </div>
+
+
+
+
+{#                                <!-- Cheque Number -->#}
+{#                                <div class="form-group">#}
+{#                                    <h5> Cheque Number <span class="text-danger">*</span></h5>#}
+{#                                    <div class="controls">#}
+{#                                        <input type="text" name="chequeNumber" id="chequeNumber"  class="form-control" required data-validation-required-message="This field is required"> </div>#}
+{#                                    <!--<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div> -->#}
+{#                                </div>#}
+
+{#                                <!-- Cheque Date in VARCHAR -->#}
+{#                                <div class="form-group">#}
+{#                                    <h5> Cheque Date <span class="text-danger">*</span></h5>#}
+{#                                    <div class="controls">#}
+{#                                        <input type="text" name="chequeDate" id="chequeDate"  class="form-control" required data-validation-required-message="This field is required"> </div>#}
+{#                                    <!--<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div> -->#}
+{#                                </div>#}
+
+                                <!-- Cheque Date -->
+                                <div class="form-group">
+                                    <h5>Cheque Date <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+{#                                        ^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$ #}
+                                        <input type="text" name="chequeDate" id="chequeDate" class="form-control" placeholder="YYYY-MM-DD" data-validation-regex-regex="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" data-validation-regex-message="Enter Valid Date"> </div>
+                                </div>
+
+                                <!-- Cheque Pay To -->
+                                <div class="form-group">
+                                    <h5> Cheque Pay To <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <input type="text" name="chequePayTo" id="chequePayTo" class="form-control" required data-validation-required-message="This field is required"> </div>
+                                    <!--<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div> -->
+                                </div>
+
+                                <!-- Cheque Pay From -->
+                                <div class="form-group">
+                                    <h5> Cheque Pay From <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <input type="text" name="chequePayFrom" id="chequePayFrom" class="form-control" required data-validation-required-message="This field is required"> </div>
+                                    <!--<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div> -->
+                                </div>
+
+                                <!-- Cheque Amount -->
+                                <div class="form-group">
+                                    <h5> Cheque Amount <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <input type="text" name="chequeAmount" id="chequeAmount" class="form-control" required data-validation-required-message="This field is required"> </div>
+                                    <!--<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div> -->
+                                </div>
+
+                                <!-- Cheque IFSC Code -->
+                                <div class="form-group">
+                                    <h5> Cheque IFSC Code <span class="text-danger">*</span></h5>
+                                    <div class="controls">
+                                        <input type="text" name="chequeIFSCCode" id="chequeIFSCCode" class="form-control" required data-validation-required-message="This field is required"> </div>
+                                    <!--<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div> -->
+                                </div>
+
+
+                                <!-- Sign -->
+
+                                <div hidden class="form-group">
+                                    <h5> Cheque Signature <span class="text-danger">*</span></h5>
+                                    <div class="controls" id="imageDiv">
+{#                                        <img id="chequeSignImage" src="" alt="Your Cheque Sign Here" />#}
+                                    </div>
+                                    <input type="text" name="SignImageName" id="SignImageName"/>
+                                </div>
+
+
+{#                                <!-- Cheque sign image/path -->#}
+{#                                <div class="form-group">#}
+{#                                    <h5> Cheque IFSC Code <span class="text-danger">*</span></h5>#}
+{#                                    <div class="controls">#}
+{#                                        <input type="text" name="chequeIFSCCode" class="form-control" required data-validation-required-message="This field is required"> </div>#}
+{#                                    <!--<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div> -->#}
+{#                                </div>#}
+
+                                <!-- Send/Cancel Buttton -->
+                                <div class="text-xs-right">
+                                    <button type="submit" class="btn btn-info">Send Details</button>
+                                    <button type="reset" class="btn btn-inverse">Cancel</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            {% include "staff/footer.html" %}
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- customizer Panel -->
+    <!-- ============================================================== -->
+
+    <!-- <div class="chat-windows"></div> -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+{#    <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />#}
+{#    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>#}
+{#    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>#}
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#chequeImage')
+                        .attr('src', e.target.result)
+                        .width(700)
+                        .height(300);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        {#function removeElement(ele) {#}
+        {#    ele.parentNode.removeChild(ele);#}
+        {#    removeElement(document.getElementById("image_X"));#}
+
+        function ajaxCheque(){
+
+            var chequeName=document.getElementById('chequeName');
+
+            path = chequeName.value.replace("C:\\fakepath\\","");
+
+            var bankId=document.getElementById('bankId');
+
+            var chequeNumber = document.getElementById('chequeNumber');
+            var chequeDate = document.getElementById('chequeDate');
+            var chequePayTo = document.getElementById('chequePayTo');
+            var chequePayFrom = document.getElementById('chequePayFrom');
+            var chequeAmount = document.getElementById('chequeAmount');
+            var chequeIFSCCode = document.getElementById('chequeIFSCCode');
+            var SignImageName=document.getElementById('SignImageName');
+            var cheque_FromBankId = document.getElementById('cheque_FromBankId');
+            {#var imageDiv = document.getElementById('imageDiv');#}
+            {#var chequeSignImage = document.getElementById('chequeSignImage');#}
+
+            var ajax=new XMLHttpRequest();
+
+
+
+            {#chequeSignImage.parentNode.removeChild(chequeSignImage);#}
+
+
+            ajax.onreadystatechange=function () {
+
+                if(ajax.readyState==4){
+
+                    var jsn=JSON.parse(ajax.responseText);
+
+
+                    {#alert(ajax.responseText);#}
+                    chequeNumber.value = jsn.chequeNumber;
+                    chequeDate.value = jsn.chequeDate;
+                    chequePayTo.value = jsn.chequePayTo;
+                    chequePayFrom.value = jsn.chequePayFrom;
+                    chequeAmount.value = jsn.crop_ammout_in_digit;
+                    chequeIFSCCode.value = jsn.chequeIFSCCode;
+
+
+
+                    var img = new Image();
+
+                    img.src = "../../static/staffResources/chequeDataset/chequeimages/"+jsn.SignImage;
+
+                    document.getElementById("imageDiv").appendChild(img);
+
+                    SignImageName.value=jsn.SignImage;
+
+
+                    {#document.getElementById('chequeImage').src ="../../static/staffResources/chequeDataset/chequeimages/"+jsn.SignImage;#}
+
+
+                    {#img.src = jsn.SignImage;#}
+
+                    {#img.src = "";#}
+
+                    {#document.getElementById("imageDiv").removeChild(img);#}
+                    {##}
+                    {#document.getElementById("imageDiv").appendChild(img);#}
+
+                    {#chequeSignImage.src = "../../static/staffResources/chequeDataset/chequeimages/" + jsn.SignImage;#}
+
+
+                    {#document.getElementById("imageDiv").appendChild(chequeSignImage);#}
+
+                    {#SignImageName.value=jsn.SignImage;#}
+
+
+                }
+            };
+
+            ajax.open("get","/chequeDetection?chequeName="+path+"&bankId="+bankId.value,true);
+            ajax.send();
+
+        }
+
+        {#function checkAll() {#}
+        {#    document.getElementById("chequeImage").removeChild(img);#}
+        {#    alert('removed image')}#}
+
+    </script>
+
+
+
+    <!-- ============================================================== -->
+    <script src="../../static/staffResources/js/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="../../static/staffResources/js/popper.min.js"></script>
+    <script src="../../static/staffResources/js/bootstrap.min.js"></script>
+    <!-- apps -->
+    <script src="../../static/staffResources/js/app.min.js"></script>
+    <script src="../../static/staffResources/js/app.init.light-sidebar.js"></script>
+    <script src="../../static/staffResources/js/app-style-switcher.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="../../static/staffResources/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../../static/staffResources/js/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="../../static/staffResources/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="../../static/staffResources/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="../../static/staffResources/js/custom.min.js"></script>
+    <script src="../../static/staffResources/js/validation.js"></script>
+    <script>
+    ! function(window, document, $) {
+        "use strict";
+        $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+    }(window, document, jQuery);
+    </script>
+</body>
+
+</html>
